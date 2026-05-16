@@ -2,16 +2,10 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "sharan9999/nginx-project:v1"
+        IMAGE_NAME = "YOUR_DOCKERHUB/nginx-project:v1"
     }
 
     stages {
-
-        stage('Clone Code') {
-            steps {
-                git 'https://github.com/sharan9999/simple-nginx-devops.git'
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
@@ -23,14 +17,14 @@ pipeline {
             steps {
 
                 withCredentials([usernamePassword(
-                credentialsId: 'dockerhub',
-                usernameVariable: 'USER',
-                passwordVariable: 'PASS')]) {
+                    credentialsId: 'dockerhub',
+                    usernameVariable: 'USER',
+                    passwordVariable: 'PASS')]) {
 
-                sh '''
-                docker login -u $USER -p $PASS
-                docker push $IMAGE_NAME
-                '''
+                    sh '''
+                    echo $PASS | docker login -u $USER --password-stdin
+                    docker push $IMAGE_NAME
+                    '''
                 }
             }
         }
