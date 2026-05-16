@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "YOUR_DOCKERHUB/nginx-project:v1"
+        IMAGE_NAME = "sharan9999/nginx-project:v1"
     }
 
     stages {
